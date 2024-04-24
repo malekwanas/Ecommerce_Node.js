@@ -19,7 +19,7 @@ mongoose
   .connect(dbURL)
   .then(() => {
     console.log("Connected to MongoDB");
-    //createProducts(); -----> Called only to create products
+    //createProducts(); -----> Called only once to create products
   })
   .then(() => {
     app.listen(3000, () => {
@@ -83,16 +83,16 @@ app.get("/", (req, res) => {
 });
 //----------------------------------------------------
 app.get("/Choose", (req, res) => {
-  res.render("Choose", { title: "Welcome" });
+  res.render(`${__dirname}\\views\\Choose`, { title: "Welcome" });
 });
 //----------------------------------------------------
 app.get("/Home", (req, res) => {
-  res.render("Choose", { title: "Welcome" });
+  res.render(`${__dirname}\\views\\Choose`, { title: "Welcome" });
 });
 
 //----------------------------------------------------
 app.get("/UserLogin", (req, res) => {
-  res.render("UserLogin", { title: "User Login" });
+  res.render(`${__dirname}\\views\\UserLogin`, { title: "User Login" });
 });
 
 //----------------------------------------------------
@@ -121,7 +121,7 @@ app.post("/user/login", async (req, res) => {
 
 //----------------------------------------------------
 app.get("/SellerLogin", (req, res) => {
-  res.render("SellerLogin", { title: "Seller Login" });
+  res.render(`${__dirname}\\views\\SellerLogin`, { title: "Seller Login" });
 });
 
 //----------------------------------------------------
@@ -170,7 +170,7 @@ app.get("/SellerProducts", async (req, res) => {
       .populate("seller")
       .sort({ name: 1 });
 
-    res.render("SellerProducts", {
+    res.render(`${__dirname}\\views\\SellerProducts`, {
       prds: products,
       title: "Seller Products",
       token: token,
@@ -208,7 +208,7 @@ app.get("/search/ProductsForSeller", async (req, res) => {
       title = "Search Results";
     }
 
-    res.render("SellerProducts", {
+    res.render(`${__dirname}\\views\\SellerProducts`, {
       prds: products,
       title: title,
       token: token,
@@ -221,13 +221,14 @@ app.get("/search/ProductsForSeller", async (req, res) => {
 });
 
 //----------------------------------------------------
-app.get("/products", (req, res) => {
+app.get(`/products`, (req, res) => {
   const token = req.query.token; // Get the token from the query parameters
+
   Product.find()
     .populate("seller")
     .sort({ name: 1 })
     .then((products) => {
-      res.render("products", {
+      res.render(`${__dirname}\\views\\products`, {
         prds: products,
         title: "Products Page",
         token: token,
@@ -259,7 +260,7 @@ app.get("/userinfo", async (req, res) => {
     }
 
     // Render the UserInfo view with user data
-    res.render("UserInfo", {
+    res.render(`${__dirname}\\views\\UserInfo`, {
       title: "User Information",
       user: user,
       token: token,
@@ -303,7 +304,8 @@ app.get("/search", async (req, res) => {
     if (!searchTerm) {
       // If searchTerm is empty, render the products page without performing the search
       const products = await Product.find().populate("seller");
-      res.render("products", {
+
+      res.render(`${__dirname}\\views\\products`, {
         prds: products,
         title: "All Products",
         token: token,
@@ -327,7 +329,7 @@ app.get("/search", async (req, res) => {
     // Combine the search results from name search and seller search
     const searchResults = [...productsByName, ...productsBySeller];
 
-    res.render("products", {
+    res.render(`${__dirname}\\views\\products`, {
       prds: searchResults,
       title: "Search Results",
       token: token,
@@ -366,7 +368,7 @@ app.get("/Orders", async (req, res) => {
 
     console.log("Orders found:", orders.length);
 
-    res.render("Orders", {
+    res.render(`${__dirname}\\views\\Orders`, {
       title: "Orders Page",
       token: token,
       ord: orders,
@@ -403,7 +405,7 @@ app.get("/SellerInfo", async (req, res) => {
     }
 
     // Render the SellerInfo view with seller data
-    res.render("SellerInfo", {
+    res.render(`${__dirname}\\views\\SellerInfo`, {
       title: "Seller Information",
       seller: seller, // Pass seller instead of user
       token: token,
