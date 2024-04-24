@@ -1,7 +1,5 @@
 # Node.js eCommerce Project
 
-[Node.js CI](https://github.com/your-username/your-repository/workflows/Node.js%20CI/badge.svg)
-
 This is a Node.js eCommerce website where users can buy products. It includes features for managing products, sellers, orders, and user accounts.
 
 ## Features
