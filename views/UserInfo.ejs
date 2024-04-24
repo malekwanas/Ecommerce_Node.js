@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Information</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+      .card {
+        width: 400px;
+        margin: 0 auto;
+      }
+      .card-header {
+        background-color: #007bff;
+        color: white;
+      }
+      .card-body {
+        padding: 20px;
+      }
+      .card-text {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header">User Information</div>
+      <div class="card-body">
+        <div class="card-text">
+          <img src="<%= user.photo %>" alt="User Photo" class="img-fluid" />
+        </div>
+        <div class="card-text"><strong>Name:</strong> <%= user.name %></div>
+        <div class="card-text"><strong>Age:</strong> <%= user.age %></div>
+        <div class="card-text">
+          <strong>Country:</strong> <%= user.Country %>
+        </div>
+        <div class="card-text"><strong>Email:</strong> <%= user.email %></div>
+        <div class="card-text">
+          <strong>Password:</strong> <%= user.password %>
+        </div>
+        <button class="btn btn-primary" id="editBtn">Edit</button>
+
+        <form
+          id="editForm"
+          style="display: none"
+          action="/EditInfo"
+          method="POST"
+        >
+          <!-- Hidden input field to hold the token -->
+          <input type="hidden" name="token" id="token" value="<%= token %>" />
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              value="<%= user.name %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="age"
+              name="age"
+              value="<%= user.age %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="country">Country:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="country"
+              name="country"
+              value="<%= user.Country %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              value="<%= user.email %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              value="<%= user.password %>"
+            />
+          </div>
+          <button type="submit" class="btn btn-success">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const editBtn = document.getElementById("editBtn");
+      const editForm = document.getElementById("editForm");
+
+      editBtn.addEventListener("click", () => {
+        editForm.style.display = "block";
+        editBtn.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

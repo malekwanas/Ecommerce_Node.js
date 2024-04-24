@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .order-card {
+      background-color: #fff;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .order-card .card-img {
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .card-header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-bottom: 2px solid #ddd;
+      border-radius: 10px 10px 0 0;
+    }
+    .card-body {
+      font-size: 20px;
+      color: #555;
+    }
+    .card-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+    }
+    .card-text {
+      font-size: 18px;
+      color: #444;
+    }
+    .btn-primary {
+      font-size: 22px;
+      font-weight: bold;
+      background-color: #007bff;
+      border: none;
+      padding: 15px 30px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .product-item {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4"><%= title %></h1>
+    <% if (ord.length === 0) { %>
+    <p class="text-center">No orders found.</p>
+    <% } else { %>
+      <% let currentDate = null; // Track current order date %>
+      <% let totalPrice = 0; // Track total price for current order %>
+      <% ord.forEach((order, index) => { %>
+        <% const orderDate = order.Date.toLocaleDateString("en-GB"); %>
+        <% if (orderDate !== currentDate) { // New order date %>
+          <% if (index !== 0) { // Close previous order card %>
+            </div>
+            <div class="card-body">
+              <p class="text-right">Total Price: $<%= totalPrice.toFixed(2) %></p>
+            </div>
+          </div>
+          <% totalPrice = 0; // Reset total price for the new card %>
+          <% } %>
+          <div class="card order-card">
+            <div class="card-header">
+              Order Date: <%= orderDate %>
+            </div>
+            <div class="card-body">
+              <% currentDate = orderDate; // Update current order date %>
+        <% } %>
+              <div class="row product-item">
+                <div class="col-md-3">
+                  <img
+                    src="<%= order.product.photo %>"
+                    class="card-img"
+                    alt="<%= order.product.name %>"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <h5 class="card-title">Product: <%= order.product.name %></h5>
+                  <p class="card-text">Seller: <%= order.seller.name %></p>
+                  <p class="card-text">
+                    Price: $<%= order.product.Price.toFixed(2) %>
+                  </p>
+                </div>
+              </div>
+              <% totalPrice += order.product.Price; // Add product price to total %>
+      <% }); %>
+      </div>
+      <div class="card-body">
+        <p class="text-right">Total Price: $<%= totalPrice.toFixed(2) %></p>
+      </div>
+    </div>
+    <% } %>
+    <div class="text-center">
+      <a href="/Home" class="btn btn-primary">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

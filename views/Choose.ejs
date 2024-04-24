@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body,
+      html {
+        height: 100%;
+      }
+      body {
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .header,
+      .footer {
+        background-color: #dc3545;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+      }
+      .footer p {
+        margin-left: 20px;
+      }
+      .container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn {
+        width: 400px;
+        height: 150px;
+        font-size: 32px;
+        margin: 20px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn:hover {
+        transform: scale(1.05);
+      }
+      .btn-danger {
+        background-color: rgba(220, 53, 69, 0.8);
+        border-color: rgba(220, 53, 69, 0.8);
+      }
+      .btn-danger:hover {
+        background-color: rgba(220, 53, 69, 1);
+        border-color: rgba(220, 53, 69, 1);
+      }
+      .btn-success {
+        background-color: rgba(40, 167, 69, 0.8);
+        border-color: rgba(40, 167, 69, 0.8);
+      }
+      .btn-success:hover {
+        background-color: rgba(40, 167, 69, 1);
+        border-color: rgba(40, 167, 69, 1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Node.js Ecommerce Project</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <a href="/UserLogin" class="btn btn-danger">User Login</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <a href="/SellerLogin" class="btn btn-danger">Seller Login</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <a href="/products" class="btn btn-success">Continue as a Guest</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Copyright &copy; Malek Wanas 2024</p>
+    </div>
+  </body>
+</html>

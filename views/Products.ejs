@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title><%= title %></title>
+    <style>
+      .card-img {
+        width: 100%;
+        height: 55%;
+      }
+
+      .search-form {
+        margin-bottom: 20px;
+      }
+
+      .footer-text {
+        color: white;
+      }
+
+      .user-info-btn {
+        color: white;
+      }
+
+      .price-tag {
+        position: absolute;
+        bottom: 15px;
+        right: 5px;
+        color: black;
+        font-weight: bolder;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/Products">
+          <img
+            src="https://shamra-academia.com/uploads/publishers/logoc1ee0a1961b28b92869f371af51313da.png"
+            alt="Your Logo"
+            height="40"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <form
+            action="/search"
+            method="GET"
+            class="form-inline my-2 my-lg-0 mr-auto search-form"
+          >
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search Product / Seller"
+              aria-label="Search"
+              name="term"
+            />
+            <% if (token) { %>
+            <input type="hidden" name="token" value="<%= token %>" />
+            <% } %>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+
+          <a
+            class="btn btn-danger my-2 my-sm-0 ml-2 user-info-btn"
+            type="button"
+            href="/userinfo?token=<%= token %>"
+          >
+            User Info
+          </a>
+          <div class="position-relative">
+            <button
+              class="btn btn-info my-2 my-sm-0 ml-2 cart-btn"
+              type="button"
+              data-toggle="collapse"
+              data-target="#cartDropdown"
+              aria-expanded="false"
+              aria-controls="cartDropdown"
+            >
+              <i class="fa fa-shopping-bag"></i>
+              <span class="badge badge-light ml-2">0</span>
+            </button>
+            <div class="collapse" id="cartDropdown">
+              <div class="card card-body">Your cart is empty.</div>
+            </div>
+          </div>
+          <a
+            class="btn btn-secondary my-2 my-sm-0 ml-2"
+            href="/Orders?token=<%= token %>"
+            >Orders</a
+          >
+          <a class="btn btn-danger my-2 my-sm-0 ml-2" href="/Choose">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="row">
+        <% prds.forEach((prd) => { %>
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <img
+              src="<%= prd.photo %>"
+              class="card-img-top card-img"
+              alt="<%= prd.name %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= prd.name %></h5>
+              <p class="card-text"><%= prd.description %></p>
+              <p class="card-text">Seller: <%= prd.seller.name %></p>
+              <p class="card-text">
+                Creation Date: <%= prd.CreationDate.toLocaleDateString("en-GB")
+                %>
+              </p>
+              <span class="price-tag">$<%= prd.Price.toFixed() %></span>
+              <a href="#" class="btn btn-primary bt">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-muted footer-text"
+          >Copyright &copy; Malek Wanas 2024</span
+        >
+      </div>
+    </footer>
+
+    <script>
+      const addToCartButtons = document.querySelectorAll(".btn-primary");
+      const cartCounter = document.querySelector(".badge");
+
+      let cartItemCount = 0;
+
+      addToCartButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          cartItemCount++;
+          cartCounter.textContent = cartItemCount;
+        });
+      });
+
+      // Get the token from the query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+
+      if (!token) {
+        const mynav = document.getElementsByTagName("nav")[0];
+        mynav.style.display = "none";
+
+        addToCartButtons.forEach((button) => {
+          button.style.display = "none";
+        });
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+      integrity="sha384-uLOe9KoAD9tzxO3eJZGAkfykz3db3Fzj2uJbKvKxwIkoPj0A2++Oi1qQ4mlBznz6"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCk5PLb0lKuahz7VqyAaX8E+8x0tp5LkJq5g"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
