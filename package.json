@@ -9,4 +9,7 @@
     "mongoose": "^8.3.2",
     "morgan": "^1.10.0"
   }
+  "scripts": {
+  "start": "node app.js"
+}
 }
